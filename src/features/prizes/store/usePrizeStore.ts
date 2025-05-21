@@ -13,6 +13,7 @@ export interface PrizeProduct {
 }
 
 export interface DetailsPrize {
+  puntos: number;
   puntosFalta: number;
   puntosMin: number;
   canjeado: boolean;

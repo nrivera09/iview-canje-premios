@@ -1,5 +1,5 @@
 import React from "react";
-import { PrizeProduct } from "@/shared/store/prizesStore";
+import { PrizeProduct, usePrizesStore } from "@/shared/store/prizesStore";
 
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import marco from "@/shared/assets/img/marco_producto.png";
@@ -7,6 +7,11 @@ import agotado from "@/shared/assets/img/23.png";
 import bgPts from "@/shared/assets/img/47.png";
 import bgFaltanPts from "@/shared/assets/img/53.png";
 import { DetailsPrize } from "@/features/prizes/store/usePrizeStore";
+import {
+  generateUniqueNumber,
+  insertZeroAfterTwoDigits,
+} from "@/shared/lib/utils";
+import { useUserStore } from "@/shared/store/userStore";
 
 interface SlideTypeABoxProps {
   product: PrizeProduct;
@@ -19,12 +24,29 @@ const SlideTypeBBox: React.FC<SlideTypeABoxProps> = ({
   details,
   handleOpenModal,
 }) => {
+  const { canjearPremio } = usePrizesStore.getState();
+  const tarjeta = useUserStore((state) => state.tarjeta);
   const { playSound } = useSoundEffect();
 
   const handleHover = () => playSound("pin");
   const handleClick = () => playSound("button");
 
   const isOutOfStock = product.stock === 0;
+
+  const handleRedeem = async (regalo: string) => {
+    const success = await canjearPremio({
+      tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
+      regalo: parseInt(regalo),
+      asset: generateUniqueNumber(5),
+      puntos: details.puntos,
+    });
+    debugger;
+    if (success) {
+      alert("🎉 Canje exitoso");
+    } else {
+      alert("❌ Error al canjear premio");
+    }
+  };
 
   return (
     <div className="flex flex-col cursor-pointer">
@@ -79,12 +101,16 @@ const SlideTypeBBox: React.FC<SlideTypeABoxProps> = ({
         </div>
       ) : (
         !isOutOfStock &&
-        !details.canjeado && (
-          <div className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl">
+        !details.canjeado &&
+        details.puntos >= details.puntosMin && (
+          <button
+            onClick={() => handleRedeem(product.id)}
+            className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl"
+          >
             <p className="bg-red-600 text-white h-[45px]  flex items-center justify-center rounded-full text-[20px] sm:text-[25px] font-bold transition-all ">
               <div className="relative top-[2px] px-2">CANJEAR</div>
             </p>
-          </div>
+          </button>
         )
       )}
     </div>

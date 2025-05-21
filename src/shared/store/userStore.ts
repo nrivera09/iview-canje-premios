@@ -15,6 +15,8 @@ interface UserPromotion {
 interface UserStore {
   promociones: UserPromotion[];
   isLoading: boolean;
+  tarjeta: string;
+  setTarjeta: (t: string) => void;
   fetchPromociones: (tarjeta: string) => Promise<void>;
 }
 
@@ -23,6 +25,8 @@ export const useUserStore = create<UserStore>()(
     (set) => ({
       promociones: [],
       isLoading: false,
+      tarjeta: "",
+      setTarjeta: (t: string) => set({ tarjeta: t }),
       fetchPromociones: async (tarjeta: string) => {
         set({ isLoading: true });
         try {

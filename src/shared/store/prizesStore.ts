@@ -12,6 +12,7 @@ export interface PrizeProduct {
 }
 
 export interface DetailsPrize {
+  puntos: number;
   puntosFalta: number;
   puntosMin: number;
   canjeado: boolean;
@@ -23,11 +24,19 @@ export interface PrizeGroup {
   detailSlide: DetailsPrize;
 }
 
+interface CanjeRequest {
+  tarjeta: number;
+  regalo: number;
+  asset: number;
+  puntos: number;
+}
+
 interface PrizesStore {
   premios: PrizeGroup[];
   isLoading: boolean;
   fetchPremios: (tarjeta: string) => Promise<void>;
   fetchImagen: (nombreImagen: string) => Promise<string | null>;
+  canjearPremio: (data: CanjeRequest) => Promise<boolean>;
 }
 
 export const usePrizesStore = create<PrizesStore>()(
@@ -63,6 +72,7 @@ export const usePrizesStore = create<PrizesStore>()(
               );
 
               const detailSlide: DetailsPrize = {
+                puntos: promo.puntos,
                 puntosFalta: promo.puntos_Falta,
                 puntosMin: promo.puntos_Min,
                 canjeado: promo.canjeado,
@@ -99,6 +109,25 @@ export const usePrizesStore = create<PrizesStore>()(
         } catch (error) {
           console.error("Error fetching imagen:", error);
           return null;
+        }
+      },
+      canjearPremio: async (payload: CanjeRequest): Promise<boolean> => {
+        try {
+          const response = await fetch(`${buildUrl(API_PATHS.CANJEAR)}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (!response.ok) throw new Error("Error en el canje del premio");
+
+          const result = await response.json();
+          return result === true;
+        } catch (error) {
+          console.error("Error al canjear premio:", error);
+          return false;
         }
       },
     }),

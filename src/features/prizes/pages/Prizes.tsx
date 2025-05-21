@@ -23,10 +23,6 @@ const Prizes: React.FC = () => {
   const [prizeGroups, setPrizeGroups] = useState<PrizeGroup[]>([]);
 
   useEffect(() => {
-    fetchPremios("1070026151");
-  }, []);
-
-  useEffect(() => {
     if (premios.length > 0) {
       setPrizeGroups(premios); // Ya viene como PrizeGroup[]
     }
