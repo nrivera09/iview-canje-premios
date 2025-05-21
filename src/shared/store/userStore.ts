@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { buildUrl } from "@/shared/lib/config";
+import { API_PATHS } from "@/shared/lib/apiPaths";
 
 interface UserPromotion {
   promocion: string;
@@ -25,7 +27,7 @@ export const useUserStore = create<UserStore>()(
         set({ isLoading: true });
         try {
           const response = await fetch(
-            `https://dev-api-canje-regalo.acity.com.pe/api/Promociones?tarjeta=${tarjeta}`
+            `${buildUrl(API_PATHS.PROMOCIONES)}?tarjeta=${tarjeta}`
           );
           const data = await response.json();
           set({ promociones: data });

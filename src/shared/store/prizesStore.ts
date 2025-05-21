@@ -1,5 +1,7 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
+import { buildUrl } from "@/shared/lib/config";
+import { API_PATHS } from "@/shared/lib/apiPaths";
 
 interface Prize {
   id: number;
@@ -25,18 +27,20 @@ export const usePrizesStore = create<PrizesStore>()(
         set({ isLoading: true });
         try {
           const response = await fetch(
-            `https://dev-api-canje-regalo.acity.com.pe/api/Regalos?tarjeta=${tarjeta}`
+            `${buildUrl(API_PATHS.REGALOS)}?tarjeta=${tarjeta}`
           );
           const data = await response.json();
           const premiosConImagen = await Promise.all(
             data.map(async (premio: Prize) => {
-              const imagen = await get().fetchImagen(premio.nombreImagen.split('.')[0]);
+              const imagen = await get().fetchImagen(
+                premio.nombreImagen.split(".")[0]
+              );
               return { ...premio, imagenBase64: imagen };
             })
           );
           set({ premios: premiosConImagen });
         } catch (error) {
-          console.error('Error fetching premios:', error);
+          console.error("Error fetching premios:", error);
         } finally {
           set({ isLoading: false });
         }
@@ -44,17 +48,17 @@ export const usePrizesStore = create<PrizesStore>()(
       fetchImagen: async (nombre: string) => {
         try {
           const response = await fetch(
-            `https://dev-api-canje-regalo.acity.com.pe/api/Regalos/imagen?nombre=${nombre}`
+            `${buildUrl(API_PATHS.REGALOS_IMAGEN)}?nombre=${nombre}`
           );
           return await response.text();
         } catch (error) {
-          console.error('Error fetching imagen:', error);
+          console.error("Error fetching imagen:", error);
           return null;
         }
       },
     }),
     {
-      name: 'prizes-storage',
+      name: "prizes-storage",
     }
   )
 );
