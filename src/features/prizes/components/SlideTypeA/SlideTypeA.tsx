@@ -17,7 +17,7 @@ const SlideTypeA: React.FC<SlideTypeAProps> = ({ slide }) => {
       style={{ backgroundImage: `url(${bgmain})` }}
     >
       <SlideTypeAHeader />
-      <SlideTypeAGrid products={slide.products} />
+      <SlideTypeAGrid products={slide.products} details={slide.detailSlide!} />
       <SlideTypeAFooter />
     </div>
   );

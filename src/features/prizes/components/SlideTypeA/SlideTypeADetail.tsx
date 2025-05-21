@@ -1,6 +1,6 @@
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from "react-icons/ri";
-import { PrizeProduct } from "../../store/usePrizeStore";
+import { PrizeProduct } from "@/shared/store/prizesStore";
 import { FC } from "react";
 import bgmain from "@/shared/assets/img/Fondo-regalo-solo.jpg";
 import SlideTypeBFooter from "../SlideTypeB/SlideTypeBFooter";
@@ -8,9 +8,11 @@ import imgHome from "@/shared/assets/img/58.png";
 import SlideTypeBBox from "../SlideTypeB/SlideTypeBBox";
 import ArrowRight from "@/shared/assets/img/61.png";
 import ArrowLeft from "@/shared/assets/img/64.png";
+import { DetailsPrize } from "@/features/prizes/store/usePrizeStore";
 
 interface SlideTypeADetailProps {
   products: PrizeProduct[];
+  details: DetailsPrize;
   currentIndex: number;
   setCurrentIndex: (index: number) => void;
   handleOpenModal: () => void;
@@ -18,6 +20,7 @@ interface SlideTypeADetailProps {
 
 const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
   products,
+  details,
   currentIndex,
   setCurrentIndex,
   handleOpenModal,
@@ -44,7 +47,6 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
   const handleHover = () => {
     playSound("pin");
   };
-  console.log("index:", currentIndex, "length:", products.length);
 
   return (
     <section className="fixed left-0 z-10 w-full h-[100dvh] bg-no-repeat bg-cover mx-auto flex flex-col overflow-hidden">
@@ -65,7 +67,7 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
                 className="object-contain w-[45px] min-w-[40px] min-h-[45px]"
               />
             </button>
-            <SlideTypeBBox product={product}></SlideTypeBBox>
+            <SlideTypeBBox product={product} details={details}></SlideTypeBBox>
             <button
               onClick={handleNext}
               disabled={currentIndex === products.length - 1}

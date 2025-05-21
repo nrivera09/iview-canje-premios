@@ -12,9 +12,16 @@ export interface PrizeProduct {
   stock: number;
 }
 
+export interface DetailsPrize {
+  puntosFalta: number;
+  puntosMin: number;
+  canjeado: boolean;
+}
+
 export interface PrizeGroup {
   type: PrizeGroupType;
   products: PrizeProduct[];
+  detailSlide?: DetailsPrize;
 }
 
 interface PrizeStoreState {

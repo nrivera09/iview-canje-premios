@@ -1,5 +1,6 @@
 import React from "react";
-import { PrizeProduct } from "@/features/prizes/store/usePrizeStore";
+import { PrizeProduct } from "@/shared/store/prizesStore";
+
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import marco from "@/shared/assets/img/marco_producto.png";
 import agotado from "@/shared/assets/img/23.png";
@@ -35,11 +36,11 @@ const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
     >
       <div className="container w-full h-full rounded-sm overflow-hidden flex items-center justify-center">
         <div className="infoProduct uppercase flex-col flex items-center justify-center gap-2">
-          <p className="text-center font-bold text-[14px] xs:text-[11px] leading-4 min-h-[32px] flex items-center justify-center ">
+          <p className="text-center font-bold text-[14px] xs:text-[11px] leading-4 min-h-[32px] flex items-center justify-center truncate-2-lines ">
             {product.nameProduct}
           </p>
           <img
-            src={product.imgProduct}
+            src={product.imagenBase64 || `/fallback/url/${product.imgProduct}`}
             alt={product.nameProduct}
             className="w-[100px] xs:w-[70px] h-auto object-contain rounded-md"
           />

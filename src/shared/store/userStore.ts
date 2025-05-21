@@ -29,6 +29,8 @@ export const useUserStore = create<UserStore>()(
           const response = await fetch(
             `${buildUrl(API_PATHS.PROMOCIONES)}?tarjeta=${tarjeta}`
           );
+          if (!response.ok)
+            throw new Error("Error de red al obtener datos: PROMOCIONES");
           const data = await response.json();
           set({ promociones: data });
         } catch (error) {

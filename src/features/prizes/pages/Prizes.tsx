@@ -1,24 +1,41 @@
 import React, { useEffect, useState } from "react";
-import SlideTypeA from "../components/SlideTypeA/SlideTypeA";
+import SlideRenderer from "../components/SlideRenderer";
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from "react-icons/ri";
-import { usePrizeStore } from "@/features/prizes/store/usePrizeStore";
-import { PrizeGroup } from "@/features/prizes/store/usePrizeStore";
-import SlideRenderer from "../components/SlideRenderer";
+import { usePrizesStore } from "@/shared/store/prizesStore";
+
+interface PrizeProduct {
+  id: string;
+  nameProduct: string;
+  imgProduct: string;
+  stock: number;
+}
+
+interface PrizeGroup {
+  type: "A" | "B";
+  products: PrizeProduct[];
+}
 
 const Prizes: React.FC = () => {
   const { playSound } = useSoundEffect();
-  const { prizes, initPrizes } = usePrizeStore();
+  const { premios, fetchPremios } = usePrizesStore();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [prizeGroups, setPrizeGroups] = useState<PrizeGroup[]>([]);
 
   useEffect(() => {
-    initPrizes();
+    fetchPremios("1070026151");
   }, []);
 
-  const currentSlide: PrizeGroup | undefined = prizes[currentIndex];
+  useEffect(() => {
+    if (premios.length > 0) {
+      setPrizeGroups(premios); // Ya viene como PrizeGroup[]
+    }
+  }, [premios]);
+
+  const currentSlide = prizeGroups[currentIndex];
 
   const handleNext = () => {
-    if (currentIndex < prizes.length - 1) {
+    if (currentIndex < prizeGroups.length - 1) {
       playSound("button");
       setCurrentIndex((prev) => prev + 1);
     }
@@ -63,7 +80,7 @@ const Prizes: React.FC = () => {
 
         <button
           onMouseEnter={handleHover}
-          disabled={currentIndex === prizes.length - 1}
+          disabled={currentIndex === prizeGroups.length - 1}
           onClick={handleNext}
           className="bg-blue-950 w-[70px] h-[50px] sm:h-[55px] flex items-center justify-center border border-gray-300 rounded-md overflow-hidden disabled:opacity-40 disabled:cursor-not-allowed"
         >

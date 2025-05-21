@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import SlideTypeABox from "./SlideTypeABox";
-import { PrizeProduct } from "@/features/prizes/store/usePrizeStore";
+import { DetailsPrize, PrizeProduct } from "@/shared/store/prizesStore";
 import SlideTypeADetail from "./SlideTypeADetail";
 
 interface SlideTypeAGridProps {
   products: PrizeProduct[];
+  details: DetailsPrize;
 }
 
-const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({ products }) => {
+const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
+  products,
+  details,
+}) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const visibleProducts = products.slice(0, 4);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -33,6 +37,7 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({ products }) => {
       {openModal && selectedIndex !== null && (
         <SlideTypeADetail
           products={visibleProducts}
+          details={details}
           currentIndex={selectedIndex}
           setCurrentIndex={setSelectedIndex}
           handleOpenModal={() => setOpenModal(false)}

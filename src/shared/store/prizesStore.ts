@@ -3,16 +3,28 @@ import { persist } from "zustand/middleware";
 import { buildUrl } from "@/shared/lib/config";
 import { API_PATHS } from "@/shared/lib/apiPaths";
 
-interface Prize {
-  id: number;
-  nombre: string;
-  nombreImagen: string;
+export interface PrizeProduct {
+  id: string;
+  nameProduct: string;
+  imgProduct: string;
   stock: number;
   imagenBase64?: string;
 }
 
+export interface DetailsPrize {
+  puntosFalta: number;
+  puntosMin: number;
+  canjeado: boolean;
+}
+
+export interface PrizeGroup {
+  type: "A" | "B";
+  products: PrizeProduct[];
+  detailSlide: DetailsPrize;
+}
+
 interface PrizesStore {
-  premios: Prize[];
+  premios: PrizeGroup[];
   isLoading: boolean;
   fetchPremios: (tarjeta: string) => Promise<void>;
   fetchImagen: (nombreImagen: string) => Promise<string | null>;
@@ -29,16 +41,42 @@ export const usePrizesStore = create<PrizesStore>()(
           const response = await fetch(
             `${buildUrl(API_PATHS.REGALOS)}?tarjeta=${tarjeta}`
           );
+          if (!response.ok)
+            throw new Error("Error de red al obtener datos: REGALOS");
           const data = await response.json();
-          const premiosConImagen = await Promise.all(
-            data.map(async (premio: Prize) => {
-              const imagen = await get().fetchImagen(
-                premio.nombreImagen.split(".")[0]
+
+          const groups: PrizeGroup[] = await Promise.all(
+            data.map(async (promo: any) => {
+              const products = await Promise.all(
+                (promo.lista_Regalos || []).map(async (regalo: any) => {
+                  const nombre = regalo.nombreImagen?.split(".")[0] || "";
+                  const img = nombre ? await get().fetchImagen(nombre) : null;
+
+                  return {
+                    id: regalo.id.toString(),
+                    nameProduct: regalo.nombre,
+                    imgProduct: regalo.nombreImagen,
+                    stock: regalo.stock,
+                    imagenBase64: img,
+                  };
+                })
               );
-              return { ...premio, imagenBase64: imagen };
+
+              const detailSlide: DetailsPrize = {
+                puntosFalta: promo.puntos_Falta,
+                puntosMin: promo.puntos_Min,
+                canjeado: promo.canjeado,
+              };
+
+              return {
+                type: promo.tipo === "Canje" ? "A" : "B",
+                products,
+                detailSlide,
+              };
             })
           );
-          set({ premios: premiosConImagen });
+
+          set({ premios: groups });
         } catch (error) {
           console.error("Error fetching premios:", error);
         } finally {
@@ -50,7 +88,14 @@ export const usePrizesStore = create<PrizesStore>()(
           const response = await fetch(
             `${buildUrl(API_PATHS.REGALOS_IMAGEN)}?nombre=${nombre}`
           );
-          return await response.text();
+
+          const blob = await response.blob();
+
+          return await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result as string);
+            reader.readAsDataURL(blob);
+          });
         } catch (error) {
           console.error("Error fetching imagen:", error);
           return null;
