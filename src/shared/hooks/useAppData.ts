@@ -9,7 +9,7 @@ export const useAppData = (tarjeta: string) => {
 
   useEffect(() => {
     const loadData = async () => {
-      await Promise.all([fetchPromociones(tarjeta), fetchPremios(tarjeta)]);
+      await Promise.all([fetchPremios(tarjeta)]);
       setReady(true);
     };
     loadData();

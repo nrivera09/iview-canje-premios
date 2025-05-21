@@ -12,6 +12,7 @@ export interface PrizeProduct {
 }
 
 export interface DetailsPrize {
+  id: number;
   puntos: number;
   puntosFalta: number;
   puntosMin: number;
@@ -25,6 +26,7 @@ export interface PrizeGroup {
 }
 
 interface CanjeRequest {
+  promocionid: number;
   tarjeta: number;
   regalo: number;
   asset: number;
@@ -72,6 +74,7 @@ export const usePrizesStore = create<PrizesStore>()(
               );
 
               const detailSlide: DetailsPrize = {
+                id: promo.id,
                 puntos: promo.puntos,
                 puntosFalta: promo.puntos_Falta,
                 puntosMin: promo.puntos_Min,
@@ -124,6 +127,12 @@ export const usePrizesStore = create<PrizesStore>()(
           if (!response.ok) throw new Error("Error en el canje del premio");
 
           const result = await response.json();
+
+          if (result === true) {
+            // Refrescar la data tras un canje exitoso
+            await get().fetchPremios(payload.tarjeta.toString());
+          }
+
           return result === true;
         } catch (error) {
           console.error("Error al canjear premio:", error);

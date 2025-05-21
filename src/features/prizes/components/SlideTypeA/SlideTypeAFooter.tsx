@@ -1,8 +1,11 @@
+import { usePrizesStore } from "@/shared/store/prizesStore";
 import { useUserStore } from "@/shared/store/userStore";
 import React from "react";
 
 const SlideTypeAFooter = () => {
   const promotion = useUserStore((state) => state.promociones[0]);
+  const premios = usePrizesStore((state) => state.premios);
+  debugger;
   const points = promotion?.puntos ?? 0;
   const minPoints = promotion?.puntos_Min ?? 1;
 

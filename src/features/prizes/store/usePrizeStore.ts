@@ -13,6 +13,7 @@ export interface PrizeProduct {
 }
 
 export interface DetailsPrize {
+  id: number;
   puntos: number;
   puntosFalta: number;
   puntosMin: number;

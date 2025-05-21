@@ -35,17 +35,17 @@ const SlideTypeBBox: React.FC<SlideTypeABoxProps> = ({
 
   const handleRedeem = async (regalo: string) => {
     const success = await canjearPremio({
+      promocionid: details.id,
       tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
       regalo: parseInt(regalo),
       asset: generateUniqueNumber(5),
       puntos: details.puntos,
     });
-    debugger;
-    if (success) {
+    /* if (success) {
       alert("🎉 Canje exitoso");
     } else {
       alert("❌ Error al canjear premio");
-    }
+    }*/
   };
 
   return (
@@ -107,9 +107,9 @@ const SlideTypeBBox: React.FC<SlideTypeABoxProps> = ({
             onClick={() => handleRedeem(product.id)}
             className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl"
           >
-            <p className="bg-red-600 text-white h-[45px]  flex items-center justify-center rounded-full text-[20px] sm:text-[25px] font-bold transition-all ">
-              <div className="relative top-[2px] px-2">CANJEAR</div>
-            </p>
+            <div className="bg-red-600 text-white h-[45px]  flex items-center justify-center rounded-full text-[20px] sm:text-[25px] font-bold transition-all ">
+              <p className="relative top-[2px] px-2">CANJEAR</p>
+            </div>
           </button>
         )
       )}
