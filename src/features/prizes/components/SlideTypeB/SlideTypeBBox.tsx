@@ -115,7 +115,7 @@ const SlideTypeBBox: React.FC<SlideTypeABoxProps> = ({
               className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl"
             >
               <div className="bg-red-600 text-white h-[45px]  flex items-center justify-center rounded-full text-[20px] sm:text-[25px] font-bold transition-all ">
-                <p className="relative top-[2px] px-2">CANJEAR</p>
+                <p className="relative top-[2px] px-2">CANJEAR </p>
               </div>
             </button>
           )
