@@ -9,6 +9,8 @@ import SlideTypeBBox from "../SlideTypeB/SlideTypeBBox";
 import ArrowRight from "@/shared/assets/img/61.png";
 import ArrowLeft from "@/shared/assets/img/64.png";
 import { DetailsPrize } from "@/features/prizes/store/usePrizeStore";
+import SlideTypeADetailFooter from "./SlideTypeADetailFooter";
+import SlideTypeBDetailInfo from "./SlideTypeADetailInfo";
 
 interface SlideTypeADetailProps {
   products: PrizeProduct[];
@@ -71,7 +73,10 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
                 className="object-contain w-[45px] min-w-[40px] min-h-[45px]"
               />
             </button>
-            <SlideTypeBBox product={product} details={details}></SlideTypeBBox>
+            <SlideTypeBDetailInfo
+              product={product}
+              details={details}
+            ></SlideTypeBDetailInfo>
             <button
               onClick={handleNext}
               disabled={currentIndex === products.length - 1}
@@ -85,7 +90,7 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
             </button>
           </div>
         </div>
-        <SlideTypeBFooter stock={product.stock}></SlideTypeBFooter>
+        <SlideTypeADetailFooter stock={product.stock}></SlideTypeADetailFooter>
       </main>
 
       <nav className="nav flex min-h-[70px] items-center justify-center gap-2">

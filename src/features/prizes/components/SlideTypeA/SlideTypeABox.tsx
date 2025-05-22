@@ -1,9 +1,15 @@
-import React from "react";
-import { PrizeProduct } from "@/shared/store/prizesStore";
+import React, { useEffect, useState } from "react";
+import { PrizeProduct, usePrizesStore } from "@/shared/store/prizesStore";
 
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
+
 import marco from "@/shared/assets/img/marco_producto.png";
 import agotado from "@/shared/assets/img/23.png";
+import Lottie from "react-lottie";
+
+import slotLoading from "@/shared/assets/lotties/loading_slot3.json";
+import LoaderImage from "@/features/shared/components/LoaderImage";
+import LoaderImageDetail from "@/features/shared/components/LoaderImageDetail";
 
 interface SlideTypeABoxProps {
   product: PrizeProduct;
@@ -15,6 +21,9 @@ const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
   handleOpenModal,
 }) => {
   const { playSound } = useSoundEffect();
+  const fetchImagen = usePrizesStore((state) => state.fetchImagen);
+  const [imagen, setImagen] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleHover = () => playSound("pin");
   const handleClick = () => playSound("button");
@@ -22,28 +31,62 @@ const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
 
   const isOutOfStock = product.stock === 0;
 
+  const defaultOptions = {
+    loop: false,
+    autoplay: true,
+    animationData: slotLoading,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  useEffect(() => {
+    let mounted = true;
+    const nombre = product.imgProduct?.split(".")[0] ?? "";
+
+    fetchImagen(nombre).then((base64) => {
+      if (mounted) {
+        setImagen(base64);
+        setTimeout(() => {
+          setLoading(false);
+        }, 3500);
+      }
+    });
+
+    return () => {
+      mounted = false;
+    };
+  }, [product.imgProduct, fetchImagen]);
+
   return (
     <div
+      data-id-product={product.id}
       onMouseEnter={handleHover}
       onClick={() => {
         isOutOfStock ? handleError() : handleClick();
         !isOutOfStock && handleOpenModal?.();
       }}
-      className={`relative cursor-pointer w-[180px] h-[180px] xs:w-[150px] xs:h-[150px] sm:w-[200px] sm:h-[200px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center  flex items-center justify-center transition-all ${
+      className={`relative cursor-pointer w-[180px] h-[180px] xs:w-[150px] xs:h-[150px] sm:w-[200px] sm:h-[200px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center flex items-center justify-center transition-all ${
         isOutOfStock ? "opacity-40 " : ""
       }`}
       style={{ backgroundImage: `url(${marco})` }}
     >
       <div className="container w-full h-full rounded-sm overflow-hidden flex items-center justify-center">
-        <div className="infoProduct uppercase flex-col flex items-center justify-center gap-2">
-          <p className="text-center font-bold text-[14px] xs:text-[11px] leading-4 min-h-[32px] flex items-center justify-center truncate-2-lines ">
-            {product.nameProduct}
-          </p>
-          <img
-            src={product.imagenBase64 || `/fallback/url/${product.imgProduct}`}
-            alt={product.nameProduct}
-            className="w-[100px] xs:w-[70px] h-auto object-contain rounded-md"
-          />
+        <div className="infoProduct uppercase flex-col flex items-center justify-center gap-2 w-full">
+          {loading ? (
+            <LoaderImageDetail />
+          ) : (
+            <>
+              <p className="text-center font-bold text-[14px] xs:text-[11px] leading-4 min-h-[32px] flex items-center justify-center truncate-2-lines">
+                {product.nameProduct}
+              </p>
+              <img
+                src={imagen || `/fallback/url/${product.imgProduct}`}
+                alt={product.nameProduct}
+                className="w-[100px] xs:w-[70px] h-auto object-contain rounded-md"
+              />
+            </>
+          )}
         </div>
       </div>
 

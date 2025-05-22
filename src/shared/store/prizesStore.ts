@@ -65,14 +65,13 @@ export const usePrizesStore = create<PrizesStore>()(
               const products = await Promise.all(
                 (promo.lista_Regalos || []).map(async (regalo: any) => {
                   const nombre = regalo.nombreImagen?.split(".")[0] || "";
-                  const img = nombre ? await get().fetchImagen(nombre) : null;
+                  //const img = nombre ? await get().fetchImagen(nombre) : null;
 
                   return {
                     id: regalo.id.toString(),
                     nameProduct: regalo.nombre,
                     imgProduct: regalo.nombreImagen,
                     stock: regalo.stock,
-                    imagenBase64: img,
                   };
                 })
               );

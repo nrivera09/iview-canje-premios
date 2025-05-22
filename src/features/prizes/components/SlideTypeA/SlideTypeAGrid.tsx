@@ -32,7 +32,10 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
 
   return (
     <>
-      <div className="contenido flex flex-1 items-center justify-center w-full">
+      <div
+        data-slide={details.id}
+        className="contenido flex flex-1 items-center justify-center w-full"
+      >
         <div className="container max-w-[440px] h-auto grid grid-cols-2 gap-x-0 gap-y-1 xs:gap-x-1 xs:gap-y-1 sm:gap-x-4 sm:gap-y-1 place-items-center">
           {visibleProducts.map((product, index) => (
             <SlideTypeABox
