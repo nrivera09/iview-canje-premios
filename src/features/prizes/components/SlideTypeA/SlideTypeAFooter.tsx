@@ -1,16 +1,23 @@
-import { usePrizesStore } from "@/shared/store/prizesStore";
+import { formatPercentage } from "@/shared/lib/utils";
+import { DetailsPrize, usePrizesStore } from "@/shared/store/prizesStore";
 import { useUserStore } from "@/shared/store/userStore";
-import React from "react";
+import React, { FC } from "react";
 
-const SlideTypeAFooter = () => {
-  const promotion = useUserStore((state) => state.promociones[0]);
-  const premios = usePrizesStore((state) => state.premios);
-  debugger;
-  const points = promotion?.puntos ?? 0;
-  const minPoints = promotion?.puntos_Min ?? 1;
+interface SlideTypeAFooterrops {
+  details: DetailsPrize;
+}
 
-  const percentage = Math.min((points / minPoints) * 100, 100);
-  const formattedPoints = points.toLocaleString("es-PE");
+const SlideTypeAFooter: FC<SlideTypeAFooterrops> = ({ details }) => {
+  const calcularPorcentaje = (
+    puntos: number = details.puntos,
+    puntosMin: number = details.puntosMin
+  ): number => {
+    if (puntosMin === 0) return 0;
+    return (puntos / puntosMin) * 100;
+  };
+
+  const porcentaje = calcularPorcentaje();
+  const formattedPoints = formatPercentage(porcentaje);
 
   return (
     <div className="footer w-full bg-blue-900 text-center min-h-[30px] flex flex-col items-center justify-center py-1 sm:py-0">
@@ -23,7 +30,7 @@ const SlideTypeAFooter = () => {
           </div>
           <div className="w-[50%] text-center ">
             <p className="text-white font-mobile-12px leading-none relative top-[.5px]">
-              {formattedPoints} PTS
+              {details.puntos} PTS
             </p>
           </div>
         </div>
@@ -31,7 +38,7 @@ const SlideTypeAFooter = () => {
           <div className="range bg-white rounded-full p-[2px] min-h-[8px] w-full flex items-center justify-start">
             <div
               className="min-h-[15px] rounded-full transition-all duration-1000 ease-out bg-gradient-to-r from-[#b77b2e] via-[#ffdd55] to-[#f8f852]"
-              style={{ width: `${percentage}%` }}
+              style={{ width: `${formattedPoints}%` }}
             ></div>
           </div>
         </div>

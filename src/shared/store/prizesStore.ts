@@ -39,6 +39,10 @@ interface PrizesStore {
   fetchPremios: (tarjeta: string) => Promise<void>;
   fetchImagen: (nombreImagen: string) => Promise<string | null>;
   canjearPremio: (data: CanjeRequest) => Promise<boolean>;
+  openPrizeDetail: boolean;
+  openPrizeRedeem: boolean;
+  setOpenPrizeDetail: (value: boolean) => void;
+  setOpenPrizeRedeem: (value: boolean) => void;
 }
 
 export const usePrizesStore = create<PrizesStore>()(
@@ -139,9 +143,21 @@ export const usePrizesStore = create<PrizesStore>()(
           return false;
         }
       },
+      openPrizeDetail: false,
+      openPrizeRedeem: false,
+      setOpenPrizeDetail: (value) => set({ openPrizeDetail: value }),
+      setOpenPrizeRedeem: (value) => set({ openPrizeRedeem: value }),
     }),
     {
       name: "prizes-storage",
+      version: 2,
+      migrate: (persistedState, version) => {
+        return {
+          ...(persistedState || {}),
+          openPrizeDetail: false,
+          openPrizeRedeem: false,
+        } as PrizesStore;
+      },
     }
   )
 );

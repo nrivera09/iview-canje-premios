@@ -21,3 +21,12 @@ export const insertZeroAfterTwoDigits = (input: number | string): string => {
   return str.slice(0, 2) + "0" + str.slice(2);
 };
 
+export const formatPercentage = (
+  valor: number,
+  maxDigits: number = 2,
+  locale: string = "es-PE"
+): string => {
+  return valor.toLocaleString(locale, {
+    maximumFractionDigits: maxDigits,
+  });
+};

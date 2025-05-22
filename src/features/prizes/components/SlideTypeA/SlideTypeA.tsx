@@ -18,7 +18,7 @@ const SlideTypeA: React.FC<SlideTypeAProps> = ({ slide }) => {
     >
       <SlideTypeAHeader />
       <SlideTypeAGrid products={slide.products} details={slide.detailSlide!} />
-      <SlideTypeAFooter />
+      <SlideTypeAFooter details={slide.detailSlide!} />
     </div>
   );
 };

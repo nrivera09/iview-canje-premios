@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import SlideTypeABox from "./SlideTypeABox";
-import { DetailsPrize, PrizeProduct } from "@/shared/store/prizesStore";
+import {
+  DetailsPrize,
+  PrizeProduct,
+  usePrizesStore,
+} from "@/shared/store/prizesStore";
 import SlideTypeADetail from "./SlideTypeADetail";
 
 interface SlideTypeAGridProps {
@@ -12,13 +16,18 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
   products,
   details,
 }) => {
+  const openPrizeDetail = usePrizesStore((state) => state.openPrizeDetail);
+  const setOpenPrizeDetail = usePrizesStore(
+    (state) => state.setOpenPrizeDetail
+  );
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const visibleProducts = products.slice(0, 4);
   const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = (index: number) => {
     setSelectedIndex(index);
-    setOpenModal(true);
+    setOpenPrizeDetail(true);
+    //setOpenModal(true);
   };
 
   return (
@@ -34,13 +43,13 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
           ))}
         </div>
       </div>
-      {openModal && selectedIndex !== null && (
+      {openPrizeDetail && selectedIndex !== null && (
         <SlideTypeADetail
           products={visibleProducts}
           details={details}
           currentIndex={selectedIndex}
           setCurrentIndex={setSelectedIndex}
-          handleOpenModal={() => setOpenModal(false)}
+          handleOpenModal={() => setOpenPrizeDetail(false)}
         />
       )}
     </>

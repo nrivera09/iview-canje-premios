@@ -1,6 +1,6 @@
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from "react-icons/ri";
-import { PrizeProduct } from "@/shared/store/prizesStore";
+import { PrizeProduct, usePrizesStore } from "@/shared/store/prizesStore";
 import { FC } from "react";
 import bgmain from "@/shared/assets/img/Fondo-regalo-solo.jpg";
 import SlideTypeBFooter from "../SlideTypeB/SlideTypeBFooter";
@@ -25,6 +25,10 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
   setCurrentIndex,
   handleOpenModal,
 }) => {
+  const setOpenPrizeDetail = usePrizesStore(
+    (state) => state.setOpenPrizeDetail
+  );
+
   const { playSound } = useSoundEffect();
   const product = products[currentIndex];
 
@@ -98,7 +102,7 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
           onMouseEnter={handleHover}
           onClick={() => {
             playSound("button");
-            handleOpenModal();
+            setOpenPrizeDetail(false);
           }}
           className="bg-blue-950 h-[50px] sm:h-[55px] px-5 flex items-center justify-center border border-white rounded-md"
         >
