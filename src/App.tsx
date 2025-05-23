@@ -5,9 +5,14 @@ import slotMachine from "@/shared/assets/img/slotmachine.png";
 import { useIsDevEnv } from "./shared/hooks/useIsDevEnv";
 import HackIview from "./shared/components/HackIview";
 import { useSoundEffect } from "./shared/hooks/useSoundEffect";
+import { useStockSignalR } from "./shared/hooks/useStockSignalR";
 
 const App: React.FC = () => {
   const isDevEnv = useIsDevEnv();
+
+  useStockSignalR((data) => {
+    console.log("📦 Actualización de stock:", data);
+  });
 
   const [tarjeta, setTarjetaLocal] = useState("100007777");
   const [showInput, setShowInput] = useState(false);

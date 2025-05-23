@@ -8,6 +8,7 @@ import {
   PrizeGroup,
 } from "@/features/shared/features/types/types";
 import { PrizesStore } from "@/features/prizes/types/prize.types";
+import { useStockSignalR } from "@/shared/hooks/useStockSignalR";
 
 export const usePrizesStore = create<PrizesStore>()(
   persist(
@@ -97,7 +98,7 @@ export const usePrizesStore = create<PrizesStore>()(
 
           if (result === true) {
             // Refrescar la data tras un canje exitoso
-            await get().fetchPremios(payload.tarjeta.toString());
+            //await get().fetchPremios(payload.tarjeta.toString());
           }
 
           return result === true;
