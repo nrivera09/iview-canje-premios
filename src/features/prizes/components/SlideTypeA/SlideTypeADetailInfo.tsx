@@ -20,10 +20,16 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   details,
   handleOpenModal,
 }) => {
+  const pointsByStorage = usePrizesStore((state) => state.nroPoint);
+  const canExchange = usePrizesStore((state) => state.canExchange);
+  const assetbyStorage = usePrizesStore((state) => state.nroAsset);
   const openPrizeRedeem = usePrizesStore((state) => state.openPrizeRedeem);
   const setOpenPrizeRedeem = usePrizesStore(
     (state) => state.setOpenPrizeRedeem
   );
+
+  const puntos = pointsByStorage === 0 ? details.puntos : pointsByStorage;
+  const detailsCanjeado = canExchange !== null ? canExchange : details.canjeado;
 
   const { canjearPremio } = usePrizesStore.getState();
   const tarjeta = useUserStore((state) => state.tarjeta);
@@ -53,8 +59,8 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
       promocionid: details.id,
       tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
       regalo: parseInt(regalo),
-      asset: generateUniqueNumber(5),
-      puntos: details.puntos,
+      asset: assetbyStorage === 0 ? generateUniqueNumber(5) : assetbyStorage,
+      puntos: puntos,
     });
     if (success) {
       setOpenPrizeRedeem(true);
@@ -111,7 +117,7 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
             </p>
           </div>
         </div>
-        {details.puntosFalta > 0 ? (
+        {puntos < details.puntosMin ? (
           <div
             style={{ backgroundImage: `url(${bgFaltanPts})` }}
             className="mx-auto flex items-center justify-center bg-no-repeat bg-cover bg-bottom w-[200px] h-[70px] xs:w-[200px] xs:h-[70px] sm:w-[260px] sm:h-[89px] relative  xs:top-[-8px] top-[-8px] sm:top-[-10px]"
@@ -123,8 +129,8 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
           </div>
         ) : (
           !isOutOfStock &&
-          !details.canjeado &&
-          details.puntos >= details.puntosMin && (
+          !detailsCanjeado &&
+          puntos >= details.puntosMin && (
             <button
               onClick={() => handleRedeem(product.id)}
               className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl"

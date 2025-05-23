@@ -28,7 +28,7 @@ const SlideTypeBGrid: React.FC<SlideTypeBGridProps> = ({
         data-slide={details.id}
         className="contenido flex flex-1 items-center justify-center w-full"
       >
-        <div className="container max-w-[440px] h-auto grid grid-cols-2 gap-x-0 gap-y-1 xs:gap-x-1 xs:gap-y-1 sm:gap-x-4 sm:gap-y-1 place-items-center">
+        <div className="container max-w-[260px] xs:max-w-[260px] h-auto grid grid-cols-2 gap-x-0 gap-y-3 xs:gap-x-0 xs:gap-y-3 sm:gap-x-0 sm:gap-y-4 place-items-center">
           {visibleProducts.map((product, index) => (
             <SlideTypeBBox
               key={product.id}

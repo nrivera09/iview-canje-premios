@@ -1,10 +1,12 @@
 import { formatPercentage } from "@/shared/lib/utils";
 import React, { FC } from "react";
 import { SlideTypeAFooterrops } from "../../types/prize.types";
+import { usePrizesStore } from "@/shared/store/prizesStore";
 
 const SlideTypeAFooter: FC<SlideTypeAFooterrops> = ({ details }) => {
+  const pointsByStorage = usePrizesStore((state) => state.nroPoint);
   const calcularPorcentaje = (
-    puntos: number = details.puntos,
+    puntos: number = pointsByStorage === 0 ? details.puntos : pointsByStorage,
     puntosMin: number = details.puntosMin
   ): number => {
     if (puntosMin === 0) return 0;
@@ -25,7 +27,7 @@ const SlideTypeAFooter: FC<SlideTypeAFooterrops> = ({ details }) => {
           </div>
           <div className="w-[50%] text-center ">
             <p className="text-white font-mobile-12px leading-none relative top-[.5px]">
-              {details.puntos} PTS
+              {pointsByStorage === 0 ? details.puntos : pointsByStorage} PTS
             </p>
           </div>
         </div>

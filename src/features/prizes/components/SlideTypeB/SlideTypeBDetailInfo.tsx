@@ -20,6 +20,7 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
   details,
   handleOpenModal,
 }) => {
+  const assetbyStorage = usePrizesStore((state) => state.nroAsset);
   const openPrizeRedeem = usePrizesStore((state) => state.openPrizeRedeem);
   const setOpenPrizeRedeem = usePrizesStore(
     (state) => state.setOpenPrizeRedeem
@@ -53,7 +54,7 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
       promocionid: details.id,
       tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
       regalo: parseInt(regalo),
-      asset: generateUniqueNumber(5),
+      asset: assetbyStorage === 0 ? generateUniqueNumber(5) : assetbyStorage,
       puntos: details.puntos,
     });
     if (success) {

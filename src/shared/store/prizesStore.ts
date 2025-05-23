@@ -113,6 +113,8 @@ export const usePrizesStore = create<PrizesStore>()(
       cardId: 0,
       nroAsset: 0,
       nroPoint: 0,
+      canExchange: null,
+      setCanExchange: (value: any) => set({ canExchange: value }),
       setCardId: (value) => set({ nroAsset: value }),
       setNroAsset: (value) => set({ nroAsset: value }),
       setNroPoint: (value) => set({ nroPoint: value }),
@@ -125,6 +127,10 @@ export const usePrizesStore = create<PrizesStore>()(
           ...(persistedState || {}),
           openPrizeDetail: false,
           openPrizeRedeem: false,
+          cardId: 0,
+          nroAsset: 0,
+          nroPoint: 0,
+          canExchange: null,
         } as PrizesStore;
       },
     }

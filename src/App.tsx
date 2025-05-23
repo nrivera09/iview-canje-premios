@@ -4,12 +4,15 @@ import { useAppData } from "@/shared/hooks/useAppData";
 import slotMachine from "@/shared/assets/img/slotmachine.png";
 import { useIsDevEnv } from "./shared/hooks/useIsDevEnv";
 import HackIview from "./shared/components/HackIview";
+import { useSoundEffect } from "./shared/hooks/useSoundEffect";
 
 const App: React.FC = () => {
   const isDevEnv = useIsDevEnv();
 
   const [tarjeta, setTarjetaLocal] = useState("100007777");
   const [showInput, setShowInput] = useState(false);
+
+  const { playSound } = useSoundEffect();
 
   const ready = useAppData(tarjeta);
 
@@ -32,8 +35,11 @@ const App: React.FC = () => {
       {isDevEnv && (
         <div className="absolute top-1/2 right-0 -translate-y-1/2 mr-1 flex flex-col items-end gap-2">
           <button
-            onClick={() => setShowInput(!showInput)}
-            className="  p-1 rounded-full"
+            onClick={() => {
+              playSound("clickIview");
+              setShowInput(!showInput);
+            }}
+            className="  p-1 border-none hover:inset-0"
           >
             <img src={slotMachine} alt="" className="w-[30px]" />
           </button>

@@ -1,1 +1,1 @@
-export type SoundEffectType = "pin" | "error" | "button";
+export type SoundEffectType = "pin" | "error" | "button" | "clickIview";
