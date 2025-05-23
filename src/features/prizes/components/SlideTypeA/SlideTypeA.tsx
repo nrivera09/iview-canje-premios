@@ -3,12 +3,7 @@ import SlideTypeAHeader from "./SlideTypeAHeader";
 import SlideTypeAFooter from "./SlideTypeAFooter";
 import SlideTypeAGrid from "./SlideTypeAGrid";
 import bgmain from "@/shared/assets/img/Fondo-regalo-solo.jpg";
-import { PrizeGroup } from "@/features/prizes/store/usePrizeStore";
-import LoaderImage from "@/features/shared/components/LoaderImage";
-
-interface SlideTypeAProps {
-  slide: PrizeGroup;
-}
+import { SlideTypeAProps } from "@/features/shared/features/types/types";
 
 const SlideTypeA: React.FC<SlideTypeAProps> = ({ slide }) => {
   return (

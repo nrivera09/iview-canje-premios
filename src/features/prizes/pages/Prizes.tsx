@@ -3,18 +3,7 @@ import SlideRenderer from "../components/SlideRenderer";
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 import { RiArrowDropLeftLine, RiArrowDropRightLine } from "react-icons/ri";
 import { usePrizesStore } from "@/shared/store/prizesStore";
-
-interface PrizeProduct {
-  id: string;
-  nameProduct: string;
-  imgProduct: string;
-  stock: number;
-}
-
-interface PrizeGroup {
-  type: "A" | "B";
-  products: PrizeProduct[];
-}
+import { PrizeGroup } from "@/features/shared/features/types/types";
 
 const Prizes: React.FC = () => {
   const { playSound } = useSoundEffect();

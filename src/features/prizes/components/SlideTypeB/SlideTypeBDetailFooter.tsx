@@ -1,7 +1,7 @@
 import React, { FC } from "react";
-import { SlideTypeADetailFooterProps } from "../../types/prize.types";
+import { SlideTypeBDetailFooterProps } from "../../types/prize.types";
 
-const SlideTypeADetailFooter: FC<SlideTypeADetailFooterProps> = ({ stock }) => {
+const SlideTypeBDetailFooter: FC<SlideTypeBDetailFooterProps> = ({ stock }) => {
   return (
     <div className="footer w-full bg-blue-900 text-center min-h-[30px] flex flex-col items-center justify-center py-1 sm:py-0">
       <div className="container flex flex-row w-full gap-2 justify-center items-center">
@@ -13,4 +13,4 @@ const SlideTypeADetailFooter: FC<SlideTypeADetailFooterProps> = ({ stock }) => {
   );
 };
 
-export default SlideTypeADetailFooter;
+export default SlideTypeBDetailFooter;

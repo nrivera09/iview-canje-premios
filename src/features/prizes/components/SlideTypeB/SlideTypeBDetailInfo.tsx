@@ -11,11 +11,11 @@ import {
   insertZeroAfterTwoDigits,
 } from "@/shared/lib/utils";
 import { useUserStore } from "@/shared/store/userStore";
-import SlideTypeBConfirmation from "./SlideTypeADetailConfirmation";
+import SlideTypeBConfirmation from "./SlideTypeBDetailConfirmation";
 import LoaderImageDetail from "@/shared/components/LoaderImageDetail";
-import { SlideTypeADetailInfoProps } from "../../types/prize.types";
+import { SlideTypeBDetailInfoProps } from "../../types/prize.types";
 
-const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
+const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
   product,
   details,
   handleOpenModal,
@@ -70,7 +70,7 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
             handleClick();
             handleOpenModal?.();
           }}
-          className={`relative cursor-pointer w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] sm:w-[350px] sm:h-[350px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center overflow-hidden flex items-center justify-center transition-all mx-auto ${
+          className={`relative cursor-pointer w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] sm:w-[400px] sm:h-[400px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center overflow-hidden flex items-center justify-center transition-all mx-auto ${
             isOutOfStock ? "opacity-40 pointer-events-none" : ""
           }`}
           style={{ backgroundImage: `url(${marco})` }}
@@ -89,7 +89,7 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
                   <img
                     src={imagen || `/fallback/url/${product.imgProduct}`}
                     alt={product.nameProduct}
-                    className="w-[150px] sm:w-[200px] xs:w-[100px] h-auto object-contain rounded-md"
+                    className="w-[150px] sm:w-[250px] xs:w-[100px] h-auto object-contain rounded-md"
                   />
                 </>
               )}
@@ -104,7 +104,7 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
           )}
           <div
             style={{ backgroundImage: `url(${bgPts})` }}
-            className="flex items-center justify-center absolute bottom-[16px] xs:bottom-[8px] sm:bottom-[23px] bg-cover bg-no-repeat bg-center w-[150px] sm:w-[180px] h-[50px] "
+            className="flex items-center justify-center absolute bottom-[16px] xs:bottom-[8px] sm:bottom-[26px] bg-cover bg-no-repeat bg-center w-[150px] sm:w-[180px] h-[50px] "
           >
             <p className="font-bold relative top-[7px] font-mobile-12px">
               {details.puntosMin} PTS
@@ -141,4 +141,4 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   );
 };
 
-export default SlideTypeADetailInfo;
+export default SlideTypeBDetailInfo;

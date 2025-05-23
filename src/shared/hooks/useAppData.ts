@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useUserStore } from "../store/userStore";
 import { usePrizesStore } from "../store/prizesStore";
 
 export const useAppData = (tarjeta: string) => {
   const [ready, setReady] = useState(false);
-  const fetchPromociones = useUserStore((state) => state.fetchPromociones);
   const fetchPremios = usePrizesStore((state) => state.fetchPremios);
   const setOpenPrizeDetail = usePrizesStore(
     (state) => state.setOpenPrizeDetail

@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { PrizeProduct, usePrizesStore } from "@/shared/store/prizesStore";
+import { usePrizesStore } from "@/shared/store/prizesStore";
 
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 
-import marco from "@/shared/assets/img/marco_producto.png";
+import marco from "@/shared/assets/img/marco_producto3.png";
 import agotado from "@/shared/assets/img/23.png";
-import Lottie from "react-lottie";
 
 import slotLoading from "@/shared/assets/lotties/loading_slot3.json";
-import LoaderImage from "@/features/shared/components/LoaderImage";
-import LoaderImageDetail from "@/features/shared/components/LoaderImageDetail";
-
-interface SlideTypeABoxProps {
-  product: PrizeProduct;
-  handleOpenModal?: () => void;
-}
+import LoaderImageDetail from "@/shared/components/LoaderImageDetail";
+import { SlideTypeABoxProps } from "../../types/prize.types";
 
 const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
   product,
@@ -66,7 +60,7 @@ const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
         isOutOfStock ? handleError() : handleClick();
         !isOutOfStock && handleOpenModal?.();
       }}
-      className={`relative cursor-pointer w-[180px] h-[180px] xs:w-[150px] xs:h-[150px] sm:w-[200px] sm:h-[200px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center flex items-center justify-center transition-all ${
+      className={`relative cursor-pointer  bg-white w-[170px] h-[170px] xs:w-[130px] xs:h-[130px] sm:w-[170px] sm:h-[170px] rounded-xl p-[10px] bg-no-repeat bg-cover bg-center flex items-center justify-center transition-all ${
         isOutOfStock ? "opacity-40 " : ""
       }`}
       style={{ backgroundImage: `url(${marco})` }}
@@ -94,7 +88,7 @@ const SlideTypeABox: React.FC<SlideTypeABoxProps> = ({
         <img
           src={agotado}
           alt="Agotado"
-          className="absolute min-w-[230px] xs:min-w-[180px] sm:min-w-[260px] xs:ml-[-5px] sm:ml-0"
+          className="absolute min-w-[230px] xs:min-w-[180px] sm:min-w-[240px] xs:ml-[-5px] sm:ml-0"
         />
       )}
     </div>

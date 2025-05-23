@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import SlideTypeABox from "./SlideTypeABox";
+import SlideTypeBBox from "./SlideTypeBBox";
 import { usePrizesStore } from "@/shared/store/prizesStore";
-import SlideTypeADetail from "./SlideTypeADetail";
-import { SlideTypeAGridProps } from "../../types/prize.types";
+import SlideTypeBDetail from "./SlideTypeBDetail";
+import { SlideTypeBGridProps } from "../../types/prize.types";
 
-const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
+const SlideTypeBGrid: React.FC<SlideTypeBGridProps> = ({
   products,
   details,
 }) => {
@@ -14,6 +14,7 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
   );
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const visibleProducts = products.slice(0, 4);
+  const [openModal, setOpenModal] = useState<boolean>(false);
 
   const handleOpenModal = (index: number) => {
     setSelectedIndex(index);
@@ -27,9 +28,9 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
         data-slide={details.id}
         className="contenido flex flex-1 items-center justify-center w-full"
       >
-        <div className="container max-w-[400px] xs:max-w-[340px] h-auto grid grid-cols-2 gap-x-0 gap-y-3 xs:gap-x-0 xs:gap-y-3 sm:gap-x-0 sm:gap-y-4 place-items-center">
+        <div className="container max-w-[440px] h-auto grid grid-cols-2 gap-x-0 gap-y-1 xs:gap-x-1 xs:gap-y-1 sm:gap-x-4 sm:gap-y-1 place-items-center">
           {visibleProducts.map((product, index) => (
-            <SlideTypeABox
+            <SlideTypeBBox
               key={product.id}
               product={product}
               handleOpenModal={() => handleOpenModal(index)}
@@ -38,7 +39,7 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
         </div>
       </div>
       {openPrizeDetail && selectedIndex !== null && (
-        <SlideTypeADetail
+        <SlideTypeBDetail
           products={visibleProducts}
           details={details}
           currentIndex={selectedIndex}
@@ -50,4 +51,4 @@ const SlideTypeAGrid: React.FC<SlideTypeAGridProps> = ({
   );
 };
 
-export default SlideTypeAGrid;
+export default SlideTypeBGrid;

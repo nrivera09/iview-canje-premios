@@ -1,12 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { RouteKey, ROUTES } from "../routes";
-
-interface RouterState {
-  currentRoute: RouteKey;
-  params: Record<string, any>;
-  navigate: (route: RouteKey, params?: Record<string, any>) => void;
-}
+import { RouterState } from "@/features/shared/app/types";
 
 const enablePersistence = true; // Cambia a false si no deseas persistencia
 

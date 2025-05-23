@@ -1,11 +1,6 @@
 import { formatPercentage } from "@/shared/lib/utils";
-import { DetailsPrize, usePrizesStore } from "@/shared/store/prizesStore";
-import { useUserStore } from "@/shared/store/userStore";
 import React, { FC } from "react";
-
-interface SlideTypeAFooterrops {
-  details: DetailsPrize;
-}
+import { SlideTypeAFooterrops } from "../../types/prize.types";
 
 const SlideTypeAFooter: FC<SlideTypeAFooterrops> = ({ details }) => {
   const calcularPorcentaje = (

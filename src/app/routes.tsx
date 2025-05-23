@@ -1,12 +1,6 @@
 import Prizes from "@/features/prizes/pages/Prizes";
 import PrizeDetail from "@/features/prizes/pages/PrizeDetail";
-
-export type RouteKey = "prize" | "prizeDetail";
-
-export interface RouteConfig {
-  key: RouteKey;
-  component: React.FC;
-}
+import { RouteConfig, RouteKey } from "@/features/shared/app/types";
 
 export const ROUTES: Record<RouteKey, RouteConfig> = {
   prize: {
@@ -18,3 +12,4 @@ export const ROUTES: Record<RouteKey, RouteConfig> = {
     component: PrizeDetail,
   },
 };
+export type { RouteKey };

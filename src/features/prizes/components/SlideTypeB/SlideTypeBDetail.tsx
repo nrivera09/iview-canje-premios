@@ -6,11 +6,11 @@ import bgmain from "@/shared/assets/img/Fondo-regalo-solo.jpg";
 import imgHome from "@/shared/assets/img/58.png";
 import ArrowRight from "@/shared/assets/img/61.png";
 import ArrowLeft from "@/shared/assets/img/64.png";
-import SlideTypeADetailFooter from "./SlideTypeADetailFooter";
-import SlideTypeBDetailInfo from "./SlideTypeADetailInfo";
-import { SlideTypeADetailProps } from "../../types/prize.types";
+import SlideTypeBDetailFooter from "./SlideTypeBDetailFooter";
+import SlideTypeBDetailInfo from "./SlideTypeBDetailInfo";
+import { SlideTypeBDetailProps } from "../../types/prize.types";
 
-const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
+const SlideTypeBDetail: FC<SlideTypeBDetailProps> = ({
   products,
   details,
   currentIndex,
@@ -80,7 +80,7 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
             </button>
           </div>
         </div>
-        <SlideTypeADetailFooter stock={product.stock}></SlideTypeADetailFooter>
+        <SlideTypeBDetailFooter stock={product.stock}></SlideTypeBDetailFooter>
       </main>
 
       <nav className="nav flex min-h-[70px] items-center justify-center gap-2">
@@ -129,4 +129,4 @@ const SlideTypeADetail: FC<SlideTypeADetailProps> = ({
   );
 };
 
-export default SlideTypeADetail;
+export default SlideTypeBDetail;

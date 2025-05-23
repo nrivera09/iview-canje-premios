@@ -6,7 +6,7 @@ import { usePrizesStore } from "@/shared/store/prizesStore";
 import { MdOutlineRedeem } from "react-icons/md";
 import { useSoundEffect } from "@/shared/hooks/useSoundEffect";
 
-const SlideTypeBConfirmation = () => {
+const SlideTypeBDetailConfirmation = () => {
   const { playSound } = useSoundEffect();
   const [showAnimation, setShowAnimation] = useState<boolean>(true);
 
@@ -100,4 +100,4 @@ const SlideTypeBConfirmation = () => {
   );
 };
 
-export default SlideTypeBConfirmation;
+export default SlideTypeBDetailConfirmation;

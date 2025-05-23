@@ -2,48 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { buildUrl } from "@/shared/lib/config";
 import { API_PATHS } from "@/shared/lib/apiPaths";
-
-export interface PrizeProduct {
-  id: string;
-  nameProduct: string;
-  imgProduct: string;
-  stock: number;
-  imagenBase64?: string;
-}
-
-export interface DetailsPrize {
-  id: number;
-  puntos: number;
-  puntosFalta: number;
-  puntosMin: number;
-  canjeado: boolean;
-}
-
-export interface PrizeGroup {
-  type: "A" | "B";
-  products: PrizeProduct[];
-  detailSlide: DetailsPrize;
-}
-
-interface CanjeRequest {
-  promocionid: number;
-  tarjeta: number;
-  regalo: number;
-  asset: number;
-  puntos: number;
-}
-
-interface PrizesStore {
-  premios: PrizeGroup[];
-  isLoading: boolean;
-  fetchPremios: (tarjeta: string) => Promise<void>;
-  fetchImagen: (nombreImagen: string) => Promise<string | null>;
-  canjearPremio: (data: CanjeRequest) => Promise<boolean>;
-  openPrizeDetail: boolean;
-  openPrizeRedeem: boolean;
-  setOpenPrizeDetail: (value: boolean) => void;
-  setOpenPrizeRedeem: (value: boolean) => void;
-}
+import {
+  CanjeRequest,
+  DetailsPrize,
+  PrizeGroup,
+} from "@/features/shared/features/types/types";
+import { PrizesStore } from "@/features/prizes/types/prize.types";
 
 export const usePrizesStore = create<PrizesStore>()(
   persist(
