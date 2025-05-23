@@ -1,5 +1,5 @@
 import {
-    CanjeRequest,
+  CanjeRequest,
   DetailsPrize,
   PrizeGroup,
   PrizeProduct,
@@ -83,4 +83,10 @@ export interface PrizesStore {
   openPrizeRedeem: boolean;
   setOpenPrizeDetail: (value: boolean) => void;
   setOpenPrizeRedeem: (value: boolean) => void;
+  cardId: number;
+  nroAsset: number;
+  nroPoint: number;
+  setCardId: (value: number) => void;
+  setNroAsset: (value: number) => void;
+  setNroPoint: (value: number) => void;
 }

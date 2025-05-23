@@ -110,6 +110,12 @@ export const usePrizesStore = create<PrizesStore>()(
       openPrizeRedeem: false,
       setOpenPrizeDetail: (value) => set({ openPrizeDetail: value }),
       setOpenPrizeRedeem: (value) => set({ openPrizeRedeem: value }),
+      cardId: 0,
+      nroAsset: 0,
+      nroPoint: 0,
+      setCardId: (value) => set({ nroAsset: value }),
+      setNroAsset: (value) => set({ nroAsset: value }),
+      setNroPoint: (value) => set({ nroPoint: value }),
     }),
     {
       name: "prizes-storage",

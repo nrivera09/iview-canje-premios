@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Router } from "./app/Router";
 import { useAppData } from "@/shared/hooks/useAppData";
-import { useUserStore } from "./shared/store/userStore";
 import slotMachine from "@/shared/assets/img/slotmachine.png";
 import { useIsDevEnv } from "./shared/hooks/useIsDevEnv";
 import HackIview from "./shared/components/HackIview";
