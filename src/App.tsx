@@ -6,13 +6,11 @@ import { useIsDevEnv } from "./shared/hooks/useIsDevEnv";
 import HackIview from "./shared/components/HackIview";
 import { useSoundEffect } from "./shared/hooks/useSoundEffect";
 import { useStockSignalR } from "./shared/hooks/useStockSignalR";
+import { usePrizesStore } from "./shared/store/prizesStore";
 
 const App: React.FC = () => {
   const isDevEnv = useIsDevEnv();
-
-  useStockSignalR((data) => {
-    console.log("📦 Actualización de stock:", data);
-  });
+  const fetchPremios = usePrizesStore((state) => state.fetchPremios);
 
   const [tarjeta, setTarjetaLocal] = useState("100007777");
   const [showInput, setShowInput] = useState(false);
@@ -20,6 +18,11 @@ const App: React.FC = () => {
   const { playSound } = useSoundEffect();
 
   const ready = useAppData(tarjeta);
+
+  useStockSignalR((data) => {
+    console.log("📦 Actualización de stock:", data);
+    fetchPremios(tarjeta);
+  });
 
   const hideIviewHack = () => {
     setShowInput(false);
