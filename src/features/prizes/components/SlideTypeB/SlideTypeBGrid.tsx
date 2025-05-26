@@ -33,7 +33,7 @@ const SlideTypeBGrid: React.FC<SlideTypeBGridProps> = ({
             <div className="relative   w-[160px] h-[130px] xs:w-[130px] xs:h-[130px] sm:w-[160px] sm:h-[130px] rounded-xl p-[10px] bg-no-repeat bg-cover bg-center flex items-center justify-center transition-all flex-col ">
               <div className="flex flex-1 w-full justify-center items-center flex-col ">
                 <p
-                  className="flex flex-col relatrive top-[12px] font-bold items-center text-white"
+                  className="flex flex-col relative top-[12px] font-bold items-center text-white"
                   style={{ lineHeight: "25px" }}
                 >
                   <span className="text-[45px]">200</span>
@@ -41,13 +41,13 @@ const SlideTypeBGrid: React.FC<SlideTypeBGridProps> = ({
                 </p>
               </div>
               <p
-                className="text-white h-[20px] text-[10px] text-center  font-light"
-                style={{ lineHeight: "10px" }}
+                className="text-white h-[20px] text-[9px] sm:text-[11px] text-center  font-light"
+                style={{ lineHeight: "13px" }}
               >
-                Acumula y canjea tu regalo <br /> dew 8 AM a 4 AM (del lunes){" "}
+                Acumula y canjea tu regalo <br /> de 8 AM a 4 AM (del lunes){" "}
               </p>
               <div className="w-full absolute top-[-6px] z-10">
-                <p className="bg-gradient-to-r from-[#b77b2e] via-[#ffdd55] to-[#f8f852] overflow-hidden rounded-full uppercase font-bold text-[15px] text-white text-center">
+                <p className="bg-gradient-to-r from-[#b77b2e] via-[#ffdd55] to-[#f8f852] overflow-hidden rounded-full uppercase font-bold text-[11px] sm:text-[15px] text-white text-center">
                   <span className="relative top-[2px]">11 de MAYO</span>
                 </p>
               </div>
