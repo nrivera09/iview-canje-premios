@@ -11,20 +11,26 @@ import {
   insertZeroAfterTwoDigits,
 } from "@/shared/lib/utils";
 import { useUserStore } from "@/shared/store/userStore";
-import SlideTypeBConfirmation from "./SlideTypeBDetailConfirmation";
+import SlideTypeADetailConfirmation from "../SlideTypeA/SlideTypeADetailConfirmation";
 import LoaderImageDetail from "@/shared/components/LoaderImageDetail";
-import { SlideTypeBDetailInfoProps } from "../../types/prize.types";
+import { SlideTypeADetailInfoProps } from "../../types/prize.types";
+import SlideTypeBDetailConfirmation from "./SlideTypeBDetailConfirmation";
 
-const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
+const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   product,
   details,
   handleOpenModal,
 }) => {
+  const pointsByStorage = usePrizesStore((state) => state.nroPoint);
+  const canExchange = usePrizesStore((state) => state.canExchange);
   const assetbyStorage = usePrizesStore((state) => state.nroAsset);
   const openPrizeRedeem = usePrizesStore((state) => state.openPrizeRedeem);
   const setOpenPrizeRedeem = usePrizesStore(
     (state) => state.setOpenPrizeRedeem
   );
+
+  const puntos = pointsByStorage === 0 ? details.puntos : pointsByStorage;
+  const detailsCanjeado = canExchange !== null ? canExchange : details.canjeado;
 
   const { canjearPremio } = usePrizesStore.getState();
   const tarjeta = useUserStore((state) => state.tarjeta);
@@ -55,7 +61,7 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
       tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
       regalo: parseInt(regalo),
       asset: assetbyStorage === 0 ? generateUniqueNumber(5) : assetbyStorage,
-      puntos: details.puntos,
+      puntos: puntos,
     });
     if (success) {
       setOpenPrizeRedeem(true);
@@ -71,7 +77,7 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
             handleClick();
             handleOpenModal?.();
           }}
-          className={`relative cursor-pointer w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] sm:w-[400px] sm:h-[400px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center overflow-hidden flex items-center justify-center transition-all mx-auto ${
+          className={`relative cursor-pointer w-[300px] h-[300px] xs:w-[200px] xs:h-[200px] sm:w-[350px] sm:h-[350px] rounded-sm p-[10px] bg-no-repeat bg-contain bg-center overflow-hidden flex items-center justify-center transition-all mx-auto ${
             isOutOfStock ? "opacity-40 pointer-events-none" : ""
           }`}
           style={{ backgroundImage: `url(${marco})` }}
@@ -90,7 +96,7 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
                   <img
                     src={imagen || `/fallback/url/${product.imgProduct}`}
                     alt={product.nameProduct}
-                    className="w-[150px] sm:w-[250px] xs:w-[100px] h-auto object-contain rounded-md"
+                    className="w-[150px] sm:w-[200px] xs:w-[100px] h-auto object-contain rounded-md"
                   />
                 </>
               )}
@@ -105,14 +111,14 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
           )}
           <div
             style={{ backgroundImage: `url(${bgPts})` }}
-            className="flex items-center justify-center absolute bottom-[16px] xs:bottom-[8px] sm:bottom-[26px] bg-cover bg-no-repeat bg-center w-[150px] sm:w-[180px] h-[50px] "
+            className="flex items-center justify-center absolute bottom-[16px] xs:bottom-[8px] sm:bottom-[23px] bg-cover bg-no-repeat bg-center w-[150px] sm:w-[180px] h-[50px] "
           >
             <p className="font-bold relative top-[7px] font-mobile-12px">
               {details.puntosMin} PTS
             </p>
           </div>
         </div>
-        {details.puntosFalta > 0 ? (
+        {puntos < details.puntosMin ? (
           <div
             style={{ backgroundImage: `url(${bgFaltanPts})` }}
             className="mx-auto flex items-center justify-center bg-no-repeat bg-cover bg-bottom w-[200px] h-[70px] xs:w-[200px] xs:h-[70px] sm:w-[260px] sm:h-[89px] relative  xs:top-[-8px] top-[-8px] sm:top-[-10px]"
@@ -124,8 +130,8 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
           </div>
         ) : (
           !isOutOfStock &&
-          !details.canjeado &&
-          details.puntos >= details.puntosMin && (
+          !detailsCanjeado &&
+          puntos >= details.puntosMin && (
             <button
               onClick={() => handleRedeem(product.id)}
               className="font-bold text-xl bg-red-900 hover:bg-red-600 p-1 rounded-full overflow-hidden xs:min-w-[150px] min-w-[200px] sm:min-w-[300px] mx-auto transition-all cursor-pointer hover:shadow-xl"
@@ -137,9 +143,9 @@ const SlideTypeBDetailInfo: React.FC<SlideTypeBDetailInfoProps> = ({
           )
         )}
       </div>
-      {openPrizeRedeem && <SlideTypeBConfirmation></SlideTypeBConfirmation>}
+      {openPrizeRedeem && <SlideTypeBDetailConfirmation />}
     </>
   );
 };
 
-export default SlideTypeBDetailInfo;
+export default SlideTypeADetailInfo;
