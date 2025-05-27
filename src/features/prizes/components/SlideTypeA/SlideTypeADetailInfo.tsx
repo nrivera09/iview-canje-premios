@@ -14,6 +14,7 @@ import { useUserStore } from "@/shared/store/userStore";
 import SlideTypeBConfirmation from "./SlideTypeADetailConfirmation";
 import LoaderImageDetail from "@/shared/components/LoaderImageDetail";
 import { SlideTypeADetailInfoProps } from "../../types/prize.types";
+import SlideTypeAConfirmation from "./SlideTypeAConfirmation";
 
 const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   product,
@@ -38,7 +39,9 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   const { playSound } = useSoundEffect();
   const fetchImagen = usePrizesStore((state) => state.fetchImagen);
   const [imagen, setImagen] = useState<string | null>(null);
+  const [confirmation, setConfirmation] = useState<boolean>(false);
   const [loadingImg, setLoadingImg] = useState(true);
+  const [productId, setProductId] = useState<string>("");
 
   useEffect(() => {
     const nombre = product.imgProduct?.split(".")[0] ?? "";
@@ -57,21 +60,31 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   const isOutOfStock = product.stock === 0;
 
   const handleRedeem = async (regalo: string) => {
+    setConfirmation(!confirmation);
+    setProductId(product.id);
+  };
+
+  const handleRedeemOk = async () => {
     const success = await canjearPremio({
       promocionid: details.id,
       tarjeta: parseInt(insertZeroAfterTwoDigits(tarjeta)),
-      regalo: parseInt(regalo),
+      regalo: parseInt(productId),
       asset: assetbyStorage === 0 ? generateUniqueNumber(5) : assetbyStorage,
       puntos: puntos,
     });
     if (success) {
+      setConfirmation(!confirmation);
       setOpenPrizeRedeem(true);
     }
   };
 
+  const hideConfirmation = () => {
+    setConfirmation(!confirmation);
+  };
+
   return (
     <>
-      <div className="flex flex-col cursor-pointer">
+      <div className="flex flex-col cursor-pointer gap-2">
         <div
           onMouseEnter={handleHover}
           onClick={() => {
@@ -121,8 +134,11 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
         </div>
         {puntos < details.puntosMin ? (
           <div
-            style={{ backgroundImage: `url(${bgFaltanPts})` }}
-            className="mx-auto flex items-center justify-center bg-no-repeat bg-cover bg-bottom w-[200px] h-[70px] xs:w-[200px] xs:h-[70px] sm:w-[260px] sm:h-[89px] relative  xs:top-[-8px] top-[-8px] sm:top-[-10px]"
+            style={{
+              backgroundImage: `url(${bgFaltanPts})`,
+              backgroundSize: "100% 70px",
+            }}
+            className="mx-auto flex items-center justify-center bg-no-repeat  bg-bottom w-[200px] h-[70px] xs:w-[200px] xs:h-[70px] sm:w-[260px] sm:h-[70px] relative  xs:top-[-8px] top-[-8px] sm:top-[-10px]"
           >
             <p className="font-bold text-black relative  leading-5 font-mobile-12px">
               LE FALTAN {details.puntosFalta} PTS <br />
@@ -145,6 +161,12 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
         )}
       </div>
       {openPrizeRedeem && <SlideTypeBConfirmation></SlideTypeBConfirmation>}
+      {confirmation && (
+        <SlideTypeAConfirmation
+          hideConfirmation={hideConfirmation}
+          handleRedeemOk={handleRedeemOk}
+        ></SlideTypeAConfirmation>
+      )}
     </>
   );
 };
