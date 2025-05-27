@@ -6,7 +6,7 @@ import { useSoundEffect } from "../hooks/useSoundEffect";
 
 const HackIview: FC<HackIviewProps> = ({ hideIviewHack }) => {
   const { playSound } = useSoundEffect();
-  const setTarjetaStore = useUserStore((state) => state.setTarjeta);
+  const setCardId = usePrizesStore((state) => state.setCardId);
   const fetchPremios = usePrizesStore((state) => state.fetchPremios);
   const setNroAsset = usePrizesStore((state) => state.setNroAsset);
   const setNroPoint = usePrizesStore((state) => state.setNroPoint);
@@ -20,7 +20,7 @@ const HackIview: FC<HackIviewProps> = ({ hideIviewHack }) => {
   const [getforzarCanje, setGetForzarCanje] = useState<any>(canExchange);
 
   const handleUpdate = async () => {
-    setTarjetaStore(tarjeta);
+    setCardId(tarjeta);
     setNroAsset(Number(asset));
     setNroPoint(Number(puntos));
     setCanExchange(getforzarCanje);

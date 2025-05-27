@@ -27,12 +27,14 @@ const SlideTypeADetailInfo: React.FC<SlideTypeADetailInfoProps> = ({
   const setOpenPrizeRedeem = usePrizesStore(
     (state) => state.setOpenPrizeRedeem
   );
+  const tarjetaId = usePrizesStore((state) => state.tarjetaId);
+  const cardId = usePrizesStore((state) => state.cardId);
 
   const puntos = pointsByStorage === 0 ? details.puntos : pointsByStorage;
   const detailsCanjeado = canExchange !== null ? canExchange : details.canjeado;
 
   const { canjearPremio } = usePrizesStore.getState();
-  const tarjeta = useUserStore((state) => state.tarjeta);
+  const tarjeta = cardId !== "0" ? cardId : tarjetaId;
   const { playSound } = useSoundEffect();
   const fetchImagen = usePrizesStore((state) => state.fetchImagen);
   const [imagen, setImagen] = useState<string | null>(null);

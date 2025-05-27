@@ -83,12 +83,14 @@ export interface PrizesStore {
   openPrizeRedeem: boolean;
   setOpenPrizeDetail: (value: boolean) => void;
   setOpenPrizeRedeem: (value: boolean) => void;
-  cardId: number;
+  tarjetaId: string;
+  cardId: string;
   nroAsset: number;
   nroPoint: number;
   canExchange: any;
   setCanExchange: (value: any) => void;
-  setCardId: (value: number) => void;
+  setTarjetaId: (value: string) => void;
+  setCardId: (value: string) => void;
   setNroAsset: (value: number) => void;
   setNroPoint: (value: number) => void;
 }

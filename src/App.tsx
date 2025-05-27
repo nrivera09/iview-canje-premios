@@ -11,8 +11,10 @@ import { usePrizesStore } from "./shared/store/prizesStore";
 const App: React.FC = () => {
   const isDevEnv = useIsDevEnv();
   const fetchPremios = usePrizesStore((state) => state.fetchPremios);
+  const setTarjetaId = usePrizesStore((state) => state.setTarjetaId);
 
   const [tarjeta, setTarjetaLocal] = useState("100007777");
+  setTarjetaId(tarjeta);
   const [showInput, setShowInput] = useState(false);
 
   const { playSound } = useSoundEffect();

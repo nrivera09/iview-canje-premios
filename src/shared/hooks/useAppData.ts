@@ -20,7 +20,7 @@ export const useAppData = (tarjeta: string) => {
       // Reiniciar flags al inicio
       setOpenPrizeDetail(false);
       setOpenPrizeRedeem(false);
-      setCardId(0);
+      setCardId("0");
       setNroAsset(0);
       setNroPoint(0);
       setCanExchange(null);
