@@ -46,7 +46,7 @@ const App: React.FC = () => {
         <div className="absolute top-1/2 right-0 -translate-y-1/2 mr-1 flex flex-col items-end gap-2">
           <button
             onClick={() => {
-              playSound("clickIview");
+              playSound("button");
               setShowInput(!showInput);
             }}
             className="  p-1 border-none hover:inset-0"
