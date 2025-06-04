@@ -8,7 +8,6 @@ import {
   PrizeGroup,
 } from "@/features/shared/features/types/types";
 import { PrizesStore } from "@/features/prizes/types/prize.types";
-import { useStockSignalR } from "@/shared/hooks/useStockSignalR";
 
 export const usePrizesStore = create<PrizesStore>()(
   persist(
@@ -109,17 +108,19 @@ export const usePrizesStore = create<PrizesStore>()(
       },
       openPrizeDetail: false,
       openPrizeRedeem: false,
-      setOpenPrizeDetail: (value) => set({ openPrizeDetail: value }),
-      setOpenPrizeRedeem: (value) => set({ openPrizeRedeem: value }),
       tarjetaId: "0",
       cardId: "0",
       nroAsset: 0,
       nroPoint: 0,
       canExchange: null,
+      view: "DM",
+      setOpenPrizeDetail: (value) => set({ openPrizeDetail: value }),
+      setOpenPrizeRedeem: (value) => set({ openPrizeRedeem: value }),
       setTarjetaId: (value) => set({ tarjetaId: value }),
       setCanExchange: (value: any) => set({ canExchange: value }),
       setCardId: (value) => set({ cardId: value }),
       setNroAsset: (value) => set({ nroAsset: value }),
+      setView: (value) => set({ view: value }),
       setNroPoint: (value) => set({ nroPoint: value }),
     }),
     {
@@ -132,9 +133,10 @@ export const usePrizesStore = create<PrizesStore>()(
           openPrizeRedeem: false,
           tarjetaId: "0",
           cardId: "0",
-          nroAsset: 0,
           nroPoint: 0,
           canExchange: null,
+          nroAsset: 0,
+          view: "",
         } as PrizesStore;
       },
     }
