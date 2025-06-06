@@ -42,7 +42,7 @@ const App: React.FC = () => {
       <Router />
 
       {isDevEnv && (
-        <div className="absolute bottom-0 left-0 mr-1 flex flex-col items-end gap-2">
+        <div className="absolute top-1/2 right-0 mr-1 flex flex-col items-end gap-2">
           <button
             onClick={() => {
               playSound("button");

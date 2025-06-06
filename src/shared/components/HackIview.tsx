@@ -30,7 +30,7 @@ const HackIview: FC<HackIviewProps> = ({ hideIviewHack }) => {
   };
 
   return (
-    <div className="bg-white p-2 rounded shadow flex flex-col items-end">
+    <div className="bg-white p-2 rounded shadow flex flex-col items-end fixed  top-1/2 right-[-10px]">
       <div className="flex flex-col gap-2">
         <div className="flex flex-col gap-1">
           <label className="text-[12px]">Nro de tarjeta:</label>
