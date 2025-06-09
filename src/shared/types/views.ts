@@ -1,1 +1,1 @@
-export type IView = "DM" | "SM" | "PM";
+export type IView = "DM" | "LVDS";
